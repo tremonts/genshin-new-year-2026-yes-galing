@@ -1,0 +1,482 @@
+/* --- RESET & VARIABLES --- */
+:root {
+    --color-deep-blue: #0b1026;
+    --color-twilight: #1b264f;
+    --color-gold: #ffd700;
+    --color-pale-gold: #f4e4bc;
+    --color-text-glow: rgba(255, 215, 0, 0.6);
+    --color-btn-hover: #b8860b;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Playfair Display', serif;
+    background: 
+        url('Images/BackgroundLiyue.png') no-repeat center center fixed,
+        linear-gradient(to bottom, var(--color-deep-blue), var(--color-twilight));
+    background-size: cover;
+    color: var(--color-pale-gold);
+    overflow-x: hidden;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+}
+
+/* --- SIMPLIFIED BACKGROUND ANIMATION (No external images) --- */
+.stars, .twinkling {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: block;
+}
+
+.stars {
+    background: 
+        radial-gradient(2px 2px at 20px 30px, rgba(255, 255, 255, 0.8), rgba(0,0,0,0)),
+        radial-gradient(1px 1px at 40px 70px, rgba(255, 255, 255, 0.6), rgba(0,0,0,0)),
+        radial-gradient(2px 2px at 60px 160px, rgba(255, 255, 255, 0.7), rgba(0,0,0,0)),
+        radial-gradient(1px 1px at 90px 40px, rgba(255, 255, 255, 0.6), rgba(0,0,0,0)),
+        radial-gradient(2px 2px at 130px 80px, rgba(255, 255, 255, 0.8), rgba(0,0,0,0)),
+        radial-gradient(1px 1px at 160px 120px, rgba(255, 255, 255, 0.6), rgba(0,0,0,0));
+    background-repeat: repeat;
+    background-size: 200px 200px;
+    z-index: 0;
+    opacity: 0.3;
+}
+
+.twinkling {
+    background: transparent;
+    z-index: 1;
+    animation: move-twink-back 200s linear infinite;
+    opacity: 0.4;
+}
+
+@keyframes move-twink-back {
+    from {background-position:0 0;}
+    to {background-position:-10000px 5000px;}
+}
+
+/* Lantern Container */
+#lantern-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 2;
+    overflow: hidden;
+}
+
+.lantern {
+    position: absolute;
+    width: 30px;
+    height: 40px;
+    background: radial-gradient(circle, #ffeb3b, #f57f17);
+    border-radius: 5px;
+    bottom: -50px;
+    opacity: 0.8;
+    box-shadow: 0 0 20px #ffc107;
+    animation: floatUp 15s linear infinite;
+}
+
+.lantern::after {
+    content: '';
+    position: absolute;
+    bottom: -10px;
+    left: 10px;
+    width: 2px;
+    height: 10px;
+    background: red;
+}
+
+/* SPECIAL USER LANTERN WITH PAIMON */
+.user-lantern-with-paimon {
+    width: 60px !important;
+    height: 70px !important;
+    background: radial-gradient(circle, #ffffff, #ffd700) !important;
+    box-shadow: 0 0 40px #ffd700, 0 0 60px #ffd700 !important;
+    z-index: 1000 !important;
+}
+
+.paimon-bubble {
+    position: absolute;
+    background: rgba(255, 215, 0, 0.9);
+    color: #0b1026;
+    padding: 8px 12px;
+    border-radius: 15px;
+    font-family: 'Playfair Display', serif;
+    font-size: 0.9rem;
+    width: 180px;
+    text-align: center;
+    bottom: 80px;
+    left: -70px;
+    opacity: 0;
+    transform: translateY(10px);
+    animation: bubbleFadeIn 1s forwards 0.5s;
+    box-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
+    z-index: 1001;
+}
+
+.paimon-bubble::after {
+    content: '';
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    margin-left: -5px;
+    border-width: 8px;
+    border-style: solid;
+    border-color: rgba(255, 215, 0, 0.9) transparent transparent transparent;
+}
+
+.paimon-image {
+    position: absolute;
+    width: 50px !important;
+    height: 50px !important;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    bottom: -60px;
+    left: 5px;
+    z-index: 999;
+    animation: paimonFloat 1s infinite alternate ease-in-out;
+}
+
+@keyframes paimonFloat {
+    from { transform: translateY(0px); }
+    to { transform: translateY(-5px); }
+}
+
+@keyframes bubbleFadeIn {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fadeOut {
+    from { opacity: 1; }
+    to { opacity: 0; }
+}
+
+@keyframes floatUp {
+    0% { transform: translateY(0) scale(0.5); opacity: 0; }
+    10% { opacity: 0.9; }
+    80% { opacity: 0.9; }
+    100% { transform: translateY(-110vh) scale(1); opacity: 0; }
+}
+
+/* --- MAIN CONTENT --- */
+.container {
+    position: relative;
+    z-index: 10;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem;
+    text-align: center;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+h1 {
+    font-family: 'Cinzel', serif;
+    font-size: 4rem;
+    color: var(--color-gold);
+    text-shadow: 0 0 10px var(--color-text-glow), 0 0 20px var(--color-text-glow);
+    margin-bottom: 1rem;
+    animation: glowPulse 3s infinite alternate;
+    background-color: rgba(11, 16, 38, 0.5);
+    padding: 0.5rem 1.5rem;
+    border-radius: 10px;
+    display: inline-block;
+}
+
+p.subtitle {
+    font-size: 1.5rem;
+    margin-bottom: 3rem;
+    font-style: italic;
+    letter-spacing: 1px;
+    background-color: rgba(11, 16, 38, 0.5);
+    padding: 0.5rem 1rem;
+    border-radius: 5px;
+    display: inline-block;
+}
+
+@keyframes glowPulse {
+    from { text-shadow: 0 0 10px var(--color-text-glow); }
+    to { text-shadow: 0 0 30px var(--color-gold), 0 0 10px #fff; }
+}
+
+/* --- CHARACTER CARDS --- */
+.char-grid {
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+    flex-wrap: wrap;
+    margin-bottom: 3rem;
+}
+
+.char-card {
+    background: rgba(11, 16, 38, 0.85);
+    border: 2px solid var(--color-gold);
+    border-radius: 15px;
+    padding: 1rem;
+    width: 280px;
+    cursor: pointer;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    position: relative;
+    overflow: hidden;
+    backdrop-filter: blur(10px);
+}
+
+.char-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 0 25px var(--color-gold);
+}
+
+.char-img-placeholder {
+    width: 100%;
+    height: 300px;
+    background-color: #333;
+    border-radius: 10px;
+    background-size: cover;
+    background-position: top center;
+    margin-bottom: 1rem;
+    overflow: hidden;
+}
+
+/* Fallback gradients if images fail */
+#kaveh .char-img-placeholder {
+    background: linear-gradient(45deg, #7c2e39, #f5e4bc);
+}
+#alhatham .char-img-placeholder {
+    background: linear-gradient(45deg, #2b4941, #39d6ab);
+}
+
+.char-name {
+    font-family: 'Cinzel', serif;
+    font-size: 1.5rem;
+    color: var(--color-gold);
+    margin-bottom: 0.5rem;
+}
+
+.char-wish {
+    max-height: 0;
+    opacity: 0;
+    overflow: hidden;
+    transition: all 0.5s ease;
+    font-style: italic;
+    color: #fff;
+    padding: 0 0.5rem;
+}
+
+.char-card.active .char-wish {
+    max-height: 200px;
+    opacity: 1;
+    padding: 1rem 0.5rem;
+    border-top: 1px solid rgba(255, 215, 0, 0.3);
+    margin-top: 0.5rem;
+}
+
+/* --- USER WISH SECTION --- */
+.user-wish-section {
+    background: rgba(0, 0, 0, 0.7);
+    padding: 2rem;
+    border-radius: 20px;
+    border: 1px solid var(--color-pale-gold);
+    width: 100%;
+    max-width: 600px;
+    backdrop-filter: blur(10px);
+}
+
+.wish-input {
+    width: 100%;
+    padding: 1rem;
+    background: transparent;
+    border: none;
+    border-bottom: 2px solid var(--color-gold);
+    color: white;
+    font-family: 'Playfair Display', serif;
+    font-size: 1.2rem;
+    margin-bottom: 1.5rem;
+    text-align: center;
+}
+
+.wish-input:focus {
+    outline: none;
+    border-bottom: 2px solid #fff;
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+.wish-input::placeholder {
+    color: rgba(244, 228, 188, 0.5);
+}
+
+.btn-release {
+    padding: 0.8rem 2rem;
+    font-family: 'Cinzel', serif;
+    font-weight: bold;
+    background: var(--color-gold);
+    color: var(--color-deep-blue);
+    border: none;
+    border-radius: 50px;
+    cursor: pointer;
+    font-size: 1.1rem;
+    transition: all 0.3s;
+    text-transform: uppercase;
+    box-shadow: 0 0 15px var(--color-gold);
+}
+
+.btn-release:hover {
+    background: white;
+    transform: scale(1.05);
+    box-shadow: 0 0 25px white;
+}
+
+/* --- FOOTER --- */
+footer {
+    position: relative;
+    z-index: 10;
+    text-align: center;
+    padding: 2rem;
+    font-size: 0.8rem;
+    color: rgba(255, 255, 255, 0.5);
+    border-top: 1px solid rgba(255, 215, 0, 0.2);
+    background: rgba(11, 16, 38, 0.9);
+}
+
+/* --- PAIMON NOTIFICATION STYLES --- */
+.paimon-notification {
+    position: fixed;
+    bottom: 100px;
+    right: 20px;
+    background: rgba(11, 16, 38, 0.95);
+    border: 2px solid var(--color-gold);
+    border-radius: 15px;
+    padding: 15px;
+    color: var(--color-pale-gold);
+    font-family: 'Playfair Display', serif;
+    font-size: 0.9rem;
+    max-width: 300px;
+    z-index: 10000;
+    animation: slideIn 0.5s ease-out;
+    backdrop-filter: blur(5px);
+    box-shadow: 0 0 20px rgba(255, 215, 0, 0.3);
+}
+
+.paimon-notif-content {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.paimon-notif-img {
+    width: 50px;
+    height: 50px;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    flex-shrink: 0;
+}
+
+/* FIVE PAIMON EXPRESSIONS */
+.paimon-happy {
+    /* Happy Paimon for greetings */
+    background-image: url('Images/PaimonGreetings.png');
+}
+
+.paimon-worried {
+    /* Worried Paimon for empty wish error */
+    background-image: url('Images/PaimonBlank.png');
+}
+
+.paimon-excited {
+    /* Excited Paimon for successful wish */
+    background-image: url('Images/PaimonCongrats.png');
+}
+
+.paimon-kaveh {
+    /* Paimon for Kaveh's comment - thinking/artistic Paimon */
+    background-image: url('Images/PaimonKaveh.png');
+}
+
+.paimon-alhaitham {
+    /* Paimon for Alhaitham's comment - serious/studious Paimon */
+    background-image: url('Images/PaimonAlhaitam.png');
+}
+
+.paimon-notif-text {
+    flex: 1;
+}
+
+@keyframes slideIn {
+    from {
+        transform: translateX(100%);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+@keyframes slideOut {
+    from {
+        transform: translateX(0);
+        opacity: 1;
+    }
+    to {
+        transform: translateX(100%);
+        opacity: 0;
+    }
+}
+
+/* --- RESPONSIVE --- */
+@media (max-width: 768px) {
+    h1 { 
+        font-size: 2.5rem; 
+        padding: 0.3rem 1rem;
+    }
+    .subtitle { 
+        font-size: 1.1rem; 
+        padding: 0.3rem 0.8rem;
+    }
+    .char-card { 
+        width: 100%; 
+        max-width: 350px; 
+    }
+    .user-wish-section { 
+        width: 90%; 
+        padding: 1.5rem;
+    }
+    
+    .paimon-bubble {
+        width: 150px;
+        font-size: 0.8rem;
+        left: -45px;
+    }
+    
+    .paimon-notification {
+        bottom: 80px;
+        right: 10px;
+        max-width: 250px;
+        font-size: 0.8rem;
+    }
+    
+    body {
+        background: 
+            url('Images/BackgroundLiyue.png') no-repeat center center fixed;
+        background-size: cover;
+    }
+}

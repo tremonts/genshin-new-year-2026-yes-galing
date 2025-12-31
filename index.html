@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>New Year Greetings</title>
+    <!-- Importing Google Fonts for that elegant look -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- Background Layers -->
+    <div class="stars"></div>
+    <div class="twinkling"></div>
+    <div id="lantern-container"></div>
+
+    <div class="container">
+        <h1>Happy New Year, Traveler!</h1>
+        <p class="subtitle">At sa mga nagsasabi ng wansa oh dito kayo! 2026 na abuh, BWELO!</p>
+
+        <div class="char-grid">
+            <!-- Kaveh Card -->
+            <div class="char-card" id="kaveh" onclick="revealWish(this, 'Happy New Year mga Igiters! Lab na Lab ko kayo saka yung isa diyan, eme BWELO!')">
+                <div class="char-img-placeholder">
+                    <img src="Images/Kaveh.png" alt="Kaveh" style="width:100%; height:100%; object-fit:cover; object-position: top;">
+                </div>
+                <div class="char-name">Kaveh</div>
+                <div class="char-wish">"Hidden Wish"</div>
+            </div>
+
+            <!-- Alhaitham Card -->
+            <div class="char-card" id="alhatham" onclick="revealWish(this, 'Happy New Year so much to you! Manifest Good Deeds sa atin, at sana mabayadan na ang utang sa akin, yuhuu')">
+                <div class="char-img-placeholder">
+                    <img src="Images/Alhaitam.png" alt="Alhaitham" style="width:100%; height:100%; object-fit:cover; object-position: top;">
+                </div>
+                <div class="char-name">Alhaitham</div>
+                <div class="char-wish">"Hidden Wish"</div>
+            </div>
+        </div>
+
+        <div class="user-wish-section">
+            <h3 style="margin-bottom: 1rem; color: var(--color-gold); font-family: 'Cinzel', serif;">Make a Wish</h3>
+            <input type="text" id="userWishInput" class="wish-input" placeholder="Type your wish here..." maxlength="50">
+            <button class="btn-release" onclick="releaseUserLantern()">Release Lantern</button>
+        </div>
+    </div>
+
+    <footer>
+        <p>Haikaveh, kasi over naman sa ask!!!!!</p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
